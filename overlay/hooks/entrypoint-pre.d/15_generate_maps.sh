@@ -40,7 +40,7 @@ jq -r '.cache_domains | to_entries[] | .key' cache_domains.json | while read CAC
             mkdir -m 755 -p /data/cache/${CACHE_IDENTIFIER}
             chown -R ${WEBUSER}:${WEBUSER} /data/cache/${CACHE_IDENTIFIER}
             echo Writing proxy cache path for ${CACHE_IDENTIFIER}
-            echo "proxy_cache_path /data/cache/$CACHE_IDENTIFIER levels=2:2 keys_zone=$CACHE_IDENTIFIER:CACHE_MEM_SIZE inactive=200d max_size=CACHE_DISK_SIZE loader_files=1000 loader_sleep=50ms loader_threshold=300ms use_temp_path=off;" >> "/etc/nginx/conf.d/20_proxy_cache_path.conf"
+            echo "proxy_cache_path /data/cache/${CACHE_IDENTIFIER} levels=2:2 keys_zone=${CACHE_IDENTIFIER}:${CACHE_MEM_SIZE} inactive=200d max_size=${CACHE_DISK_SIZE} loader_files=1000 loader_sleep=50ms loader_threshold=300ms use_temp_path=off;" >> "/etc/nginx/conf.d/20_proxy_cache_path.conf"
 		done
 	done
 done
