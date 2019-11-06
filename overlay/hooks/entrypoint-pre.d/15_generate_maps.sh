@@ -27,7 +27,11 @@ jq -r '.cache_domains | to_entries[] | .key' cache_domains.json | while read CAC
 			#Get the actual file name
 			echo Reading cache ${CACHE_IDENTIFIER} from ${CACHEHOSTS_FILENAME}
 			cat ${CACHEHOSTS_FILENAME} | while read CACHE_HOST; do
-				#for each file in the hosts file
+                #for each file in the hosts file
+				# check if line is comment
+                if [[ ${CACHE_HOST} == \#* ]]; then
+                    continue
+                fi
 				#remove all whitespace (mangles comments but ensures valid config files)
 				echo "host: $CACHE_HOST"
 				CACHE_HOST=${CACHE_HOST// /}
